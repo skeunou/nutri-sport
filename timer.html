@@ -73,12 +73,12 @@ header h1 span{color:var(--acc)}
 /* ---- LV : horloge + compteur de series ---- */
 #lvRow{display:flex;gap:10px;width:100%;max-width:420px;margin-top:14px;align-items:stretch}
 #nowClock{flex:1;border:2px solid currentColor;border-radius:12px;padding:8px 6px;text-align:center;opacity:.85}
-#serieBox{flex:1.2;display:none;border:2px solid currentColor;border-radius:12px;overflow:hidden}
-#lvRow .lab{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;opacity:.65;font-weight:700}
+#serieBox{flex:1.3;display:none;border:2px solid currentColor;border-radius:12px;padding:8px 6px;text-align:center}
+#lvRow .lab{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;opacity:.65;font-weight:700;display:block}
 #lvRow .val{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;letter-spacing:2px;font-variant-numeric:tabular-nums}
-#serieHit{width:100%;background:transparent;border:none;color:inherit;padding:8px 6px 6px;cursor:pointer;display:block}
-#serieHit:active{background:rgba(128,128,128,.18)}
-#serieRaz{width:100%;background:transparent;border:none;border-top:1px solid currentColor;color:inherit;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:2px;padding:5px 0;opacity:.6;cursor:pointer}
+#srow{display:flex;align-items:center;justify-content:space-between;gap:4px}
+#srow button{background:transparent;border:none;color:inherit;font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;padding:0 14px;cursor:pointer;opacity:.75;-webkit-user-select:none;user-select:none}
+#srow button:active{opacity:1;transform:scale(1.15)}
 
 /* ---- chrono ---- */
 #recupBox{margin-top:6px}
@@ -115,8 +115,12 @@ footer{text-align:center;font-size:11px;color:var(--mut);letter-spacing:1px;marg
     <div id="lvRow">
       <div id="nowClock"><div class="lab">Heure</div><div class="val" id="nowVal">--:--</div></div>
       <div id="serieBox">
-        <button id="serieHit" onclick="serieInc()"><span class="lab" style="display:block">Séries</span><span class="val" id="serieVal" style="display:block">0</span></button>
-        <button id="serieRaz" onclick="serieReset()">RAZ</button>
+        <span class="lab">Séries</span>
+        <div id="srow">
+          <button onclick="serieDec()" oncontextmenu="serieReset();return false;">−</button>
+          <span class="val" id="serieVal">0</span>
+          <button onclick="serieInc()">+</button>
+        </div>
       </div>
     </div>
     <div id="recupBox" style="display:none">
@@ -472,6 +476,9 @@ function renderSerie(){
 }
 function serieInc(){
   R.series=(R.series||0)+1; renderSerie(); beep(700,.06,.35); buzz(35); saveRun();
+}
+function serieDec(){
+  R.series=(R.series||0)-1; if(R.series<0) R.series=0; renderSerie(); beep(520,.06,.3); buzz(30); saveRun();
 }
 function serieReset(){
   R.series=0; renderSerie(); beep(420,.12,.35); buzz([40,50,40]); saveRun();
