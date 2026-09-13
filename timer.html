@@ -433,7 +433,9 @@ function stopRun(){
 /* ============ CHRONO : TOURS + RÉCUP ============ */
 function renderRecupBtns(){
   var d=C.chrono.recup;
-  var h='<button class="chip" onclick="lap()">TOUR</button>';
+  /* LV sept.2026 : bouton TOUR retire a la demande de Laurent (remplace par le compteur de series).
+     Code conserve — decommenter la ligne ci-dessous pour le reactiver. lap()/renderLaps() intacts. */
+  var h=""; /* var h='<button class="chip" onclick="lap()">TOUR</button>'; */
   [30,45,60,90,120].forEach(function(v){ h+='<button class="chip" onclick="startRecup('+v+')">'+(v<60?v+"s":(v/60)+"min")+'</button>'; });
   h+='<button class="chip" onclick="startRecup('+d+')" style="background:var(--acc2);color:#12080a;border-color:var(--acc2)">RÉCUP '+dur(d)+'</button>';
   document.getElementById("recupBtns").innerHTML=h;
